@@ -1,15 +1,18 @@
 const choices = ["rock","paper","scissor"];
+const winners= [];
 
 function playgame(){
-    playround();
+    for(let i=1; i<=5; i++){
+        playround();
+    }
+    Score();
 }
 
 function playround(){
     const humanselection = getHumanchoice();
     const computerselection = getComputerchoice();
-    console.log(computerselection);
     const winner =checkWinner(humanselection,computerselection);
-    console.log(winner);
+    winners.push(winner);
 }
 
 function getHumanchoice(){
@@ -17,10 +20,17 @@ function getHumanchoice(){
     while (input == null ){
         input = prompt("TYPE ROCK PAPER SCISSSOR");
     }
-    input = input.toLocaleLowerCase();
+    input = input.toLowerCase();
     let check = validateInput(input)
-    if(check == true){
-        console.log(input)
+    while(check == false){
+        input = prompt(
+            "Type rock paper or scissor , or  you have spelling mistake"
+        );
+        while (input == null){
+            input = prompt("TYPE ROCK PAPER SCISSSOR");
+        }
+        input = input.toLowerCase();
+        check =validateInput(input);
     }
     return input;
 }
@@ -30,7 +40,6 @@ function getComputerchoice(){
 }
 
 function checkWinner(choiceH , choiceC){
-    console.log(choiceH,choiceC);
     if(choiceH === choiceC){
         return "Tie"
     }else if((choiceH === "rock" && choiceC === "scissor") || 
@@ -49,6 +58,16 @@ function validateInput(choice){
     }else{
         return false;
     }
+}
+
+function Score(){
+    let HumanWin = winners.filter((item) => item == "Human").length;
+    let ComputerWin = winners.filter((item) => item == "Computer").length;
+    let Tie = winners.filter((item) => item == "Tie").length;
+    console.log("Result");
+    console.log('Human wins' ,HumanWin);
+    console.log('Computer wins' ,ComputerWin);
+    console.log('Tir',Tie);
 }
 
 playgame();
