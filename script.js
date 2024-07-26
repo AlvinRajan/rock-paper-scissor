@@ -3,16 +3,17 @@ const winners= [];
 
 function playgame(){
     for(let i=1; i<=5; i++){
-        playround();
+        playround(i);
     }
     Score();
 }
 
-function playround(){
+function playround(round){
     const humanselection = getHumanchoice();
     const computerselection = getComputerchoice();
     const winner =checkWinner(humanselection,computerselection);
     winners.push(winner);
+    logRound(humanselection,computerselection,winner,round);
 }
 
 function getHumanchoice(){
@@ -65,9 +66,16 @@ function Score(){
     let ComputerWin = winners.filter((item) => item == "Computer").length;
     let Tie = winners.filter((item) => item == "Tie").length;
     console.log("Result");
-    console.log('Human wins' ,HumanWin);
-    console.log('Computer wins' ,ComputerWin);
-    console.log('Tir',Tie);
+    console.log('Human wins:' ,HumanWin);
+    console.log('Computer wins:' ,ComputerWin);
+    console.log('Tie',Tie);
 }
 
-playgame();
+function logRound(getHumanchoice,getComputerchoice,winner,round){
+    console.log('Round ',round);
+    console.log('Human choice:',getHumanchoice);
+    console.log('Computer choice:',getComputerchoice);
+    console.log(winner,'won the round');
+    console.log("----------------------");
+
+}
